@@ -11,6 +11,7 @@ function Faucet() {
    const result = await token.payOut();
    setText(result);
     // setDisable(false);
+    //2vxsx-fae
   }
 
   return (
