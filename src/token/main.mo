@@ -1,16 +1,22 @@
 import Principal "mo:base/Principal";
 import HashMap "mo:base/HashMap";
 import Debug "mo:base/Debug";
+import Iter "mo:base/Iter";
 
 actor Token {
+
+    Debug.print("Hooky");
 
     var owner: Principal = Principal.fromText("56og6-xj4au-p2nvg-3rynz-vzxiw-yx5x3-jtid7-xz3xo-nz2x4-gb7fa-hae");
     var totalSupply : Nat = 1000000000;
     var symbol : Text = "DANG";
 
-    var balances = HashMap.HashMap<Principal, Nat>(1, Principal.equal, Principal.hash);
+    private stable var balanceEntries: [(Principal, Nat)] = [];
 
-    balances.put(owner, totalSupply);
+    private var balances = HashMap.HashMap<Principal, Nat>(1, Principal.equal, Principal.hash);
+    if(balances.size() < 1) {
+        balances.put(owner, totalSupply);
+    };
 
     public query func balanceOf(who: Principal) : async Nat {
 
@@ -54,5 +60,19 @@ actor Token {
         }
         
     }
+
+
+
+    system func preUpgrsde() {
+        balanceEntries := Iter.toArray(balances.entries());
+    };
+
+    system func postUpgrsde() {
+        balances:= HashMap.fromIter<Principal, Nat>(balanceEntries.val(), 1, Principal.equal, Principal.hash);
+        if(balances.size() < 1) {
+            balances.put(owner, totalSupply);
+        }
+    };
+
 
 };
