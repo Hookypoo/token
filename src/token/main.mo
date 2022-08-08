@@ -5,7 +5,7 @@ import Iter "mo:base/Iter";
 
 actor Token {
 
-    Debug.print("Hooky");
+   
 
     var owner: Principal = Principal.fromText("56og6-xj4au-p2nvg-3rynz-vzxiw-yx5x3-jtid7-xz3xo-nz2x4-gb7fa-hae");
     var totalSupply : Nat = 1000000000;
@@ -59,16 +59,16 @@ actor Token {
             return "insufficient funds";
         }
         
-    }
+    };
 
 
 
-    system func preUpgrsde() {
+    system func preupgrade() {
         balanceEntries := Iter.toArray(balances.entries());
     };
 
-    system func postUpgrsde() {
-        balances:= HashMap.fromIter<Principal, Nat>(balanceEntries.val(), 1, Principal.equal, Principal.hash);
+    system func postupgrade() {
+        balances:= HashMap.fromIter<Principal, Nat>(balanceEntries.vals(), 1, Principal.equal, Principal.hash);
         if(balances.size() < 1) {
             balances.put(owner, totalSupply);
         }
