@@ -11,7 +11,11 @@ function Faucet() {
    const result = await token.payOut();
    setText(result);
     // setDisable(false);
+<<<<<<< HEAD
     // browser msg.caller id 2vxsx-fae
+=======
+    //2vxsx-fae
+>>>>>>> 6e2bc336b706a96c189ee6c8371c40e2f600ac28
   }
 
   return (
