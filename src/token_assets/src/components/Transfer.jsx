@@ -6,8 +6,10 @@ function Transfer() {
 
   const [recipientId, setId] = useState("");
   const [amount, setAmount] = useState("");
+  const [isDisabled, setDisable] = useState(false);
   
   async function handleClick() {
+    setDisable(true);
     const recipient = Principal.fromText(recipientId);
     const amountToTransfer = Number(amount);
     await token.transfer(recipient, amountToTransfer);
@@ -25,7 +27,7 @@ function Transfer() {
                 type="text"
                 id="transfer-to-id"
                 value={recipientId}
-                onChange={(e) =>(e.target.value)}
+                onChange={(e) =>setId(e.target.value)}
               />
             </li>
           </ul>
